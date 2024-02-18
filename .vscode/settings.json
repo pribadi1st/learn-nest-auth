@@ -1,0 +1,16 @@
+{
+    "vetur.validation.template": true,
+    "editor.codeActionsOnSave": [
+        "source.organizeImports",
+        "source.fixAll"
+    ],
+    // ...
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    // ...
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "prettier.singleQuote": true,
+    "prettier.trailingComma": "es5",
+    "prettier.useTabs": true,
+    "editor.formatOnSave": true,
+    "vetur.format.defaultFormatter.html": "prettier"
+}
