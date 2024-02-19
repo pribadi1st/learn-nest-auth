@@ -4,9 +4,10 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { HeroController } from './hero/hero.controller';
 import { HeroService } from './hero/hero.service';
+import { UserModule } from './user/user.module';
 
 @Module({
-  imports: [ConfigModule.forRoot()],
+  imports: [ConfigModule.forRoot(), UserModule],
   controllers: [AppController, HeroController],
   providers: [AppService, HeroService],
 })
