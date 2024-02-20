@@ -33,6 +33,18 @@ export class UserService {
     return `This action returns all user`;
   }
 
+  async findByEmail(email: string) {
+    return await this.prisma.user
+      .findUniqueOrThrow({
+        where: {
+          email: email,
+        },
+      })
+      .catch((e) => {
+        throw new NotFoundException(e.message);
+      });
+  }
+
   async findOne(id: number) {
     const user = await this.prisma.user.findUnique({
       where: {
