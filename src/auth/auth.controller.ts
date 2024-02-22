@@ -1,10 +1,14 @@
 import {
   Body,
   Controller,
+  Get,
   Post,
+  Request,
   Response,
+  UseGuards,
   ValidationPipe,
 } from '@nestjs/common';
+import { AuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 
@@ -22,5 +26,11 @@ export class AuthController {
     const { user, accessToken } = await this.authService.login(body);
     response.set('Authorization', `Bearer ${accessToken}`);
     return user;
+  }
+
+  @UseGuards(AuthGuard)
+  @Get('current-user')
+  async currentUser(@Request() request) {
+    return this.authService.getCurrentUser(request.user);
   }
 }
