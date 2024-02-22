@@ -27,7 +27,7 @@ export class AuthService {
       user,
       accessToken: this.jwtService.sign(payload, {
         secret: JwtAuth.secret,
-        expiresIn: '60s',
+        expiresIn: '1h',
       }),
     };
   }

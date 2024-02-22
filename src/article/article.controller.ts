@@ -1,14 +1,26 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  UseGuards,
+  ValidationPipe,
+} from '@nestjs/common';
+import { AuthGuard } from 'src/auth/auth.guard';
 import { ArticleService } from './article.service';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
 
+@UseGuards(AuthGuard)
 @Controller('article')
 export class ArticleController {
   constructor(private readonly articleService: ArticleService) {}
 
   @Post()
-  create(@Body() createArticleDto: CreateArticleDto) {
+  create(@Body(new ValidationPipe()) createArticleDto: CreateArticleDto) {
     return this.articleService.create(createArticleDto);
   }
 

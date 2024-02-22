@@ -1,9 +1,19 @@
 import { Module } from '@nestjs/common';
-import { ArticleService } from './article.service';
+import { JwtService } from '@nestjs/jwt';
+import { AuthService } from 'src/auth/auth.service';
+import { PrismaService } from 'src/prisma.service';
+import { UserService } from 'src/user/user.service';
 import { ArticleController } from './article.controller';
+import { ArticleService } from './article.service';
 
 @Module({
   controllers: [ArticleController],
-  providers: [ArticleService],
+  providers: [
+    ArticleService,
+    AuthService,
+    JwtService,
+    UserService,
+    PrismaService,
+  ],
 })
 export class ArticleModule {}

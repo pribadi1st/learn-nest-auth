@@ -1,11 +1,31 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Inject, Injectable, Scope } from '@nestjs/common';
+import { REQUEST } from '@nestjs/core';
+import { PrismaService } from 'src/prisma.service';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
 
-@Injectable()
+@Injectable({ scope: Scope.REQUEST })
 export class ArticleService {
-  create(createArticleDto: CreateArticleDto) {
-    return 'This action adds a new article';
+  constructor(
+    @Inject(REQUEST) private readonly request: Request,
+    private prisma: PrismaService,
+  ) {}
+
+  async create(createArticleDto: CreateArticleDto) {
+    const { user } = <any>this.request;
+
+    const article = await this.prisma.article
+      .create({
+        data: {
+          ...createArticleDto,
+          authorId: user.sub,
+        },
+      })
+      .catch((e) => {
+        throw new ConflictException('Duplicated data');
+      });
+    return article;
+    // return article;
   }
 
   findAll() {
